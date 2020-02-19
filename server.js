@@ -59,7 +59,6 @@ app.use((request, response, next) => {
 
 
 function isLogged(req, res, next) {
-  console.log('asdqwe')
   if (req.session.user) {
     console.log('User logged in, next')
     next();
@@ -95,10 +94,10 @@ app.get('/recipes', (request, response) => {
 app.post('/isLogged', (req, res) => {
   console.log(req.session);
   if (req.session.user) {
-    res.json({ logged: true, user: req.session.user })
+    res.json({ logged: true, info: req.session.user })
   }
   else {
-    res.status(401).end();
+    res.json({ logged: false, info: { favorites: [] } })
   }
 });
 
@@ -118,7 +117,7 @@ app.post('/login', (request, response) => {
   if (username) {
     request.session.user = db.users[email];
     console.log('<< 200 OK', username);
-    response.send({ logged: true, user: request.session.user });
+    response.json({ logged: true, info: request.session.user });
   }
   else {
     console.log('<< 401 UNAUTHORIZED');
@@ -128,7 +127,7 @@ app.post('/login', (request, response) => {
 
 app.post('/logout', (req, res) => {
   req.session.destroy();
-  res.send({ logged: false, user: { favorites: [] } });
+  res.json({ logged: false, info: { favorites: [] } });
 });
 
 /*
