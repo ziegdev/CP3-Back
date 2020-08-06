@@ -74,6 +74,7 @@ app.get('/', (req, res) => {
         <li>Login : avec <code>email</code> et <code>password</code> : <code>POST http://localhost:${port}/login</code></li>
         <li>Déconnexion : <code>POST http://localhost:${port}/logout</code></li>
         <li><code>POST http://localhost:${port}/isLogged</code></li>
+        <li><code>POST http://localhost:${port}/favorites</code></li>
       </ul>
     </div>
   `);
@@ -88,7 +89,7 @@ app.get('/recipes', (req, res) => {
 app.post('/isLogged', (req, res) => {
   console.log('>> POST /isLogged', req.session.user);
   if (req.session.user) {
-    res.json({ logged: true })
+    res.json({ logged: true, pseudo: req.session.user.username })
   }
   else {
     res.json({ logged: false })
