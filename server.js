@@ -106,9 +106,9 @@ app.post('/login', (req, res) => {
   }
 });
 
-// Favorites recipes : POST /favorites
-app.post('/favorites', authorizationMiddleware, (req, res) => {
-  console.log('>> POST /favorites', req.user);
+// Favorites recipes : GET /favorites
+app.get('/favorites', authorizationMiddleware, (req, res) => {
+  console.log('>> GET /favorites', req.user);
 
   const user = db.users.find(user => user.id === req.user.userId);
   console.log('<< 200');
